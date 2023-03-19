@@ -80,7 +80,7 @@ impl Assets {
     /// to 128 bytes and will be truncated if longer than that.
     pub fn large(mut self, key: impl Into<String>, text: Option<impl Into<String>>) -> Self {
         let key = key.into();
-        if key.len() > 32 {
+        if key.len() > 32 && (!key.starts_with("http://") || !key.starts_with("https://")) {
             tracing::warn!("Large Image Key '{}' is invalid, disregarding", key);
             return self;
         }
